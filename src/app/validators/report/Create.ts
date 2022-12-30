@@ -7,6 +7,8 @@ export default {
     temperature: yup.number().notRequired(),
     rain: yup.number().notRequired(),
     solarRadiation: yup.number().notRequired(),
+    windDirection: yup.number().notRequired(),
+    windVelocity: yup.number().notRequired(),
   }),
   params: yup.object().shape({
     machineId: yup.string().required(),

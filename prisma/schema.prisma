@@ -17,6 +17,8 @@ model Report {
   temperature    Float?
   rain           Float?
   solarRadiation Float?
+  windVelocity   Float?
+  windDirection  Float?
   createdAt      DateTime @default(now())
   machineId      String   @db.ObjectId
 

@@ -8,6 +8,8 @@ interface CreateData {
   temperature?: number;
   rain?: number;
   solarRadiation?: number;
+  windVelocity?: number;
+  windDirection?: number;
 }
 
 class ReportController {
@@ -48,6 +50,8 @@ class ReportController {
           temperature: true,
           rain: true,
           solarRadiation: true,
+          windVelocity: true,
+          windDirection: true,
           createdAt: true,
         },
       });
@@ -72,6 +76,8 @@ class ReportController {
       'temperature',
       'rain',
       'solarRadiation',
+      'windVelocity',
+      'windDirection',
     ];
 
     let data: CreateData = {};
