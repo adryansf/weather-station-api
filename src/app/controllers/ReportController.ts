@@ -41,6 +41,15 @@ class ReportController {
         orderBy: {
           createdAt: 'desc',
         },
+        select: {
+          id: true,
+          humidity: true,
+          pressure: true,
+          temperature: true,
+          rain: true,
+          solarRadiation: true,
+          createdAt: true,
+        },
       });
 
       return res.json({
