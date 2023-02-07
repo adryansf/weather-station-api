@@ -10,6 +10,8 @@ interface CreateData {
   solarRadiation?: number;
   windVelocity?: number;
   windDirection?: number;
+  createdAt?: string;
+  machineId: string;
 }
 
 class ReportController {
@@ -70,6 +72,8 @@ class ReportController {
   }
 
   async create(req: Request, res: Response, next: NextFunction) {
+    if (Object.values(req.body || {}).length <= 0) return res.sendStatus(406);
+
     const attributes = [
       'humidity',
       'pressure',
@@ -78,13 +82,8 @@ class ReportController {
       'solarRadiation',
       'windVelocity',
       'windDirection',
+      'createdAt',
     ];
-
-    let data: CreateData = {};
-    for (let attr of attributes) {
-      if (req.body[attr])
-        data = { ...data, [attr]: parseFloat(req.body[attr]) };
-    }
 
     const { machineId } = req.params;
 
@@ -101,11 +100,28 @@ class ReportController {
       if (!machine)
         return res.status(404).json({ error: 'Machine not found.' });
 
-      await prisma.report.create({
-        data: {
-          ...data,
-          machineId,
-        },
+      let unformattedData = !Object.keys(req.body).includes('multi')
+        ? [req.body]
+        : req.body.multi;
+      let data: CreateData[] = [];
+
+      for (let i of unformattedData) {
+        let currentData: CreateData = { machineId };
+        for (let attr of attributes) {
+          switch (attr) {
+            case 'createdAt':
+              currentData = { ...currentData, [attr]: i[attr] };
+              break;
+            default:
+              currentData = { ...currentData, [attr]: parseFloat(i[attr]) };
+              break;
+          }
+        }
+        data.push(currentData);
+      }
+
+      await prisma.report.createMany({
+        data,
       });
 
       return res.sendStatus(201);
