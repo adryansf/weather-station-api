@@ -108,6 +108,7 @@ class ReportController {
       for (let i of unformattedData) {
         let currentData: CreateData = { machineId };
         for (let attr of attributes) {
+          if(!i[attr]) continue;
           switch (attr) {
             case 'createdAt':
               currentData = { ...currentData, [attr]: i[attr] };
