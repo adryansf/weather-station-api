@@ -66,7 +66,11 @@ class DayController {
       }
 
       for (let key of Object.keys(data)) {
-        data[key as keyof Data] = data[key as keyof Data] / reports.length;
+        let reportsWithKey = 0;
+        for (let report of reports) {
+          if (report[key as keyof Data]) reportsWithKey++;
+        }
+        data[key as keyof Data] = data[key as keyof Data] / reportsWithKey;
       }
 
       return res.json(data);
