@@ -69,7 +69,7 @@ class DayController {
         let reportsWithKey = 0;
         for (let report of reports) {
           if (
-            report[key as keyof Data] != null ||
+            report[key as keyof Data] != null &&
             report[key as keyof Data] != undefined
           )
             reportsWithKey++;
