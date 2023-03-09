@@ -66,6 +66,8 @@ class DayController {
       }
 
       for (let key of Object.keys(data)) {
+        if (key === 'rain') continue;
+
         let reportsWithKey = 0;
         for (let report of reports) {
           if (
