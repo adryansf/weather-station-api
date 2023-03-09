@@ -68,7 +68,11 @@ class DayController {
       for (let key of Object.keys(data)) {
         let reportsWithKey = 0;
         for (let report of reports) {
-          if (report[key as keyof Data]) reportsWithKey++;
+          if (
+            report[key as keyof Data] != null ||
+            report[key as keyof Data] != undefined
+          )
+            reportsWithKey++;
         }
         data[key as keyof Data] = data[key as keyof Data] / reportsWithKey;
       }
